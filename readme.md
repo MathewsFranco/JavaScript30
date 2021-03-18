@@ -1,4 +1,8 @@
-﻿![](https://javascript30.com/images/JS3-social-share.png)
+📒 I`m doing all 30 challenges by my self not following the tutorial and trying to add an extra mile. Check the PR's comments to see what was the extra mile in that specific challenge.
+
+
+
+![](https://javascript30.com/images/JS3-social-share.png)
 
 # JavaScript30
 
