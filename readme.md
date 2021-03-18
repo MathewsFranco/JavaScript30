@@ -1,4 +1,4 @@
-📒 I`m doing all 30 challenges by my self not following the tutorial and trying to add an extra mile. Check the PR's comments to see what was the extra mile in that specific challenge.
+📒 :warning: **I'm doing all 30 challenges by my self not following the tutorial and trying to add an extra mile. Check the PR's comments to see what was the extra mile in that specific challenge.**
 
 
 
