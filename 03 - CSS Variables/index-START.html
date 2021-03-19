@@ -1,51 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Scoped CSS Variables and JS</title>
-</head>
-<body>
-  <h2>Update CSS Variables with <span class='hl'>JS</span></h2>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Scoped CSS Variables and JS</title>
+  </head>
+  <body>
+    <h2>Update CSS Variables with <span class="hl">JS</span></h2>
 
-  <div class="controls">
-    <label for="spacing">Spacing:</label>
-    <input id="spacing" type="range" name="spacing" min="10" max="200" value="10" data-sizing="px">
+    <div class="controls">
+      <label for="spacing">Spacing:</label>
+      <input
+        id="spacing"
+        type="range"
+        name="spacing"
+        min="10"
+        max="200"
+        value="10"
+        data-sizing="px"
+        oninput="applySpacing(this.value)"
+        onchange="applySpacing(this.value)"
+      />
 
-    <label for="blur">Blur:</label>
-    <input id="blur" type="range" name="blur" min="0" max="25" value="10" data-sizing="px">
+      <label for="blur">Blur:</label>
+      <input
+        id="blur"
+        type="range"
+        name="blur"
+        min="0"
+        max="25"
+        value="0"
+        data-sizing="px"
+        oninput="applyBlur(this.value)"
+        onchange="applyBlur(this.value)"
+      />
 
-    <label for="base">Base Color</label>
-    <input id="base" type="color" name="base" value="#ffc600">
-  </div>
+      <label for="base">Base Color</label>
+      <input
+        id="base"
+        type="color"
+        name="base"
+        value="#ffc600"
+        oninput="applyColor(this.value)"
+        onchange="applyColor(this.value)"
+      />
+      <button class="random-btn">Random!</button>
+    </div>
 
-  <img src="https://source.unsplash.com/7bwQXzbF6KE/800x500">
+    <img
+      class="custom-img"
+      src="https://source.unsplash.com/7bwQXzbF6KE/800x500"
+    />
 
-  <style>
-
-    /*
+    <style>
+      /*
       misc styles, nothing to do with CSS variables
     */
 
-    body {
-      text-align: center;
-      background: #193549;
-      color: white;
-      font-family: 'helvetica neue', sans-serif;
-      font-weight: 100;
-      font-size: 50px;
-    }
+      body {
+        text-align: center;
+        background: #193549;
+        color: white;
+        font-family: "helvetica neue", sans-serif;
+        font-weight: 100;
+        font-size: 50px;
+        --color-picked: #ccc;
+        --spacing: 0px;
+        --blur: 0;
+      }
+      .random-btn {
+        font-size: 30px;
+      }
+      .custom-img {
+        border: solid 10px;
+        border-color: #ffc600;
+        filter: blur(0px);
+      }
+      .hl {
+        color: #ffc600;
+      }
 
-    .controls {
-      margin-bottom: 50px;
-    }
+      .controls {
+        margin-bottom: 50px;
+      }
 
-    input {
-      width: 100px;
-    }
-  </style>
+      input {
+        width: 100px;
+      }
+    </style>
+    <script>
+      const customText = document.querySelector(`.hl`);
+      const customImg = document.querySelector(`.custom-img`);
+      const randomButton = document.querySelector(`.random-btn`);
 
-  <script>
-  </script>
+      function applySpacing(spacing) {
+        customImg.style.setProperty(`border`, `solid ${spacing}px`);
+      }
+      function applyBlur(blur) {
+        customImg.style.setProperty(`filter`, `blur(${blur}px`);
+      }
 
-</body>
+      function applyColor(color) {
+        customImg.style.setProperty(`border-color`, `${color}`);
+        customText.style.setProperty(`color`, `${color}`);
+      }
+
+      function random(min, max) {
+        const num = Math.floor(Math.random() * (max - min)) + min;
+        return num;
+      }
+
+      randomButton.addEventListener(`click`, () => {
+        const spacing = document.getElementById(`spacing`);
+        const blur = document.getElementById(`blur`);
+        const color = document.getElementById(`base`);
+        const randomSpacing = random(10, 200);
+        const randomBlur = random(0, 25);
+        const randomColor = `#${Math.floor(Math.random() * 16777215).toString(
+          16
+        )}`;
+        spacing.value = randomSpacing;
+        blur.value = randomBlur;
+        color.value = randomColor;
+
+        applySpacing(randomSpacing);
+        applyBlur(randomBlur);
+        applyColor(randomColor);
+      });
+    </script>
+  </body>
 </html>
