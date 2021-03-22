@@ -63,15 +63,15 @@
         font-family: "helvetica neue", sans-serif;
         font-weight: 100;
         font-size: 50px;
-        --color-picked: #ccc;
-        --spacing: 0px;
-        --blur: 0;
       }
       .random-btn {
         font-size: 30px;
       }
+      :root {
+        --spacing: 10px;
+      }
       .custom-img {
-        border: solid 10px;
+        border: solid var(--spacing);
         border-color: #ffc600;
         filter: blur(0px);
       }
@@ -93,7 +93,7 @@
       const randomButton = document.querySelector(`.random-btn`);
 
       function applySpacing(spacing) {
-        customImg.style.setProperty(`border`, `solid ${spacing}px`);
+        customImg.style.setProperty(`--spacing`, `${spacing}px`);
       }
       function applyBlur(blur) {
         customImg.style.setProperty(`filter`, `blur(${blur}px`);
