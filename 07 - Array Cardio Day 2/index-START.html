@@ -1,41 +1,166 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Array Cardio 💪💪</title>
-</head>
-<body>
-  <p><em>Psst: have a look at the JavaScript Console</em> 💁</p>
-  <script>
-    // ## Array Cardio Day 2
+  <head>
+    <meta charset="UTF-8" />
+    <title>Array Cardio 💪💪</title>
+    <link
+      rel="stylesheet"
+      href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+      integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
+      crossorigin="anonymous"
+    />
+  </head>
+  <style>
+    html {
+      box-sizing: border-box;
+      background-image: url("https://source.unsplash.com/4Zaq5xY5M_c");
+    }
+    .deleted-section {
+      display: flex;
+      flex-wrap: wrap;
+      background: rgba(255, 0, 0, 0.15);
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      min-height: 250px;
+    }
 
-    const people = [
-      { name: 'Wes', year: 1988 },
-      { name: 'Kait', year: 1986 },
-      { name: 'Irv', year: 1970 },
-      { name: 'Lux', year: 2015 }
-    ];
+    .delete-button {
+      background: transparent;
+      border: none;
+      margin-top: 10px;
+      margin-right: 10px;
+      position: absolute;
+      right: 0;
+      top: 0;
+      cursor: pointer;
+    }
 
-    const comments = [
-      { text: 'Love this!', id: 523423 },
-      { text: 'Super good', id: 823423 },
-      { text: 'You are the best', id: 2039842 },
-      { text: 'Ramen is my fav food ever', id: 123523 },
-      { text: 'Nice Nice Nice!', id: 542328 }
-    ];
+    .cards {
+      display: flex;
+      flex-wrap: wrap;
+      min-height: 250px;
+    }
+    .comment-id {
+      color: rgb(70, 70, 70);
+      text-align: right;
+      font-size: small;
+      margin-right: 10px;
+      position: absolute;
+      right: 0;
+      bottom: 0;
+    }
+    .comment {
+      text-align: center;
+      margin-top: 80px;
+      margin-bottom: 7px;
+      font-size: larger;
+    }
+    .user-name {
+      position: absolute;
+      bottom: 0;
+      margin-left: 20px;
+    }
+    .card {
+      position: relative;
+      background: rgba(255, 255, 255, 0.05);
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      width: 350px;
+      height: 200px;
+      margin: 10px;
+    }
+  </style>
+  <body>
+    <p><em>Psst: have a look at the JavaScript Console</em> 💁</p>
+    <div class="cards"></div>
+    <p class="deleted-hl">Deleted comments:</p>
+    <div class="deleted-section"></div>
+    <script>
+      // ## Array Cardio Day 2
 
-    // Some and Every Checks
-    // Array.prototype.some() // is at least one person 19 or older?
-    // Array.prototype.every() // is everyone 19 or older?
+      const people = [
+        {name: "Wes", year: 1988},
+        {name: "Kait", year: 1986},
+        {name: "Irv", year: 1970},
+        {name: "Lux", year: 2015},
+        {name: "Asserdna", year: 1984},
+      ];
 
-    // Array.prototype.find()
-    // Find is like filter, but instead returns just the one you are looking for
-    // find the comment with the ID of 823423
+      const comments = [
+        {text: "Love this!", id: 523423},
+        {text: "Super good", id: 823423},
+        {text: "You are the best", id: 2039842},
+        {text: "Ramen is my fav food ever", id: 123523},
+        {text: "Nice Nice Nice!", id: 542328},
+      ];
 
-    // Array.prototype.findIndex()
-    // Find the comment with this ID
-    // delete the comment with the ID of 823423
+      // Some and Every Checks
+      // Array.prototype.some() // is at least one person 19 or older?
+      const over19 = people.some(
+        (e) => new Date().getFullYear() - e.year >= 19
+      );
+      console.log(`🚀 ~ over19`, over19);
+      // Array.prototype.every() // is everyone 19 or older?
+      const allOver19 = people.every(
+        (e) => new Date().getFullYear() - e.year >= 19
+      );
+      console.log(`🚀 ~ allOver19`, allOver19);
 
-  </script>
-</body>
+      // Array.prototype.find()
+      // Find is like filter, but instead returns just the one you are looking for
+      // find the comment with the ID of 823423
+      let findById = comments.find((e) => e.id === 823423);
+      console.log(`🚀 ~ findById`, findById);
+
+      // Array.prototype.findIndex()
+      // Find the comment with this ID
+      findById = comments.findIndex((e) => e.id === 823423);
+      // delete the comment with the ID of 823423
+      // comments.splice(findById, 1);
+      // console.log(`🚀 ~ comments`, comments);
+
+      // TODO: extra mile => cards to hold the comments and attach each one to a person
+      const cards = document.querySelector(`.cards`);
+      const deletedSection = document.querySelector(`.deleted-section`);
+      let index = 0;
+      function createCard() {
+        const card = document.createElement(`div`);
+        card.classList.add(`card`);
+        card.innerHTML = `
+          <button class="delete-button"><i class="fas fa-trash"></i></button>
+          <p class="comment">" ${comments[index].text} "</p>
+          <p class="comment-id">Id: ${comments[index].id} </p>
+          <p class="user-name"> ${people[index].name}, ${
+          new Date().getFullYear() - people[index].year
+        }</p>
+          `;
+        cards.appendChild(card);
+        index++;
+      }
+      people.forEach((person) => {
+        createCard();
+      });
+      // TODO: delete button and deleted area (maybe restore?)
+      const deleteButton = document.querySelectorAll(`.delete-button`);
+      deleteButton.forEach((e) => {
+        e.addEventListener(`click`, function () {
+          if (e.parentElement.parentElement.className === "cards") {
+            e.innerHTML = `<i class="fas fa-trash-restore-alt"></i>`;
+            deletedSection.appendChild(e.parentElement);
+          } else if (
+            e.parentElement.parentElement.className === "deleted-section"
+          ) {
+            e.innerHTML = `<i class="fas fa-trash"></i>`;
+            cards.appendChild(e.parentElement);
+          }
+        });
+      });
+    </script>
+  </body>
 </html>
