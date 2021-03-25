@@ -1,19 +1,159 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>HTML5 Canvas</title>
-</head>
-<body>
-<canvas id="draw" width="800" height="800"></canvas>
-<script>
-</script>
+  <head>
+    <meta charset="UTF-8" />
+    <title>HTML5 Canvas</title>
+    <link
+      rel="stylesheet"
+      href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+      integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div class="controls">
+        <button id="delete-button"><i class="fas fa-trash"></i></button>
+        <button id="eraser"><i class="fas fa-eraser"></i></button>
+      </div>
+      <div class="delete-confirmation">
+        <p class="warning">
+          Are you sure that you want DELETE this master piece?
+        </p>
+        <button class="yes">Yep</button>
+        <button class="no">Nah</button>
+      </div>
+      <canvas id="draw" width="800" height="800"> </canvas>
+    </div>
+    <script>
+      const canvas = document.getElementById(`draw`);
+      const eraser = document.getElementById("eraser");
+      const deleteBtn = document.getElementById(`delete-button`);
+      const deleteConfirmation = document.querySelector(`.delete-confirmation`);
+      const yesBtn = document.querySelector(`.yes`);
+      const noBtn = document.querySelector(`.no`);
+      const ctx = canvas.getContext(`2d`);
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      ctx.lineWidth = 100;
 
-<style>
-  html, body {
-    margin: 0;
-  }
-</style>
+      const pos = {x: 0, y: 0};
+      let hue = 0;
+      let direction = true;
 
-</body>
+      document.addEventListener("mousedown", setPosition);
+      document.addEventListener("mousemove", draw);
+      document.addEventListener("mouseenter", setPosition);
+
+      // new position from mouse event
+      function setPosition(e) {
+        pos.x = e.clientX;
+        pos.y = e.clientY;
+      }
+      function draw(e) {
+        ctx.strokeStyle = `hsl(${hue}, 75%, 50%)`;
+        ctx.lineCap = "round";
+        ctx.lineJoin = "round";
+        // mouse left button must be pressed
+        if (e.buttons !== 1) return;
+        ctx.beginPath();
+        ctx.moveTo(pos.x, pos.y);
+        setPosition(e);
+        ctx.lineTo(pos.x, pos.y);
+        ctx.stroke(); // draw
+        hue++;
+
+        if (ctx.lineWidth >= 200 || ctx.lineWidth <= 10) {
+          direction = !direction;
+        }
+
+        if (direction) {
+          ctx.lineWidth++;
+        } else {
+          ctx.lineWidth--;
+        }
+        if (canvas.classList.contains(`active`)) {
+          ctx.lineWidth = 100;
+          ctx.globalCompositeOperation = "destination-out";
+        } else {
+          ctx.globalCompositeOperation = "source-over";
+        }
+      }
+
+      // TODO: extra mile > delete button and a eraser
+
+      deleteBtn.addEventListener(`click`, () =>
+        deleteConfirmation.classList.add(`active`)
+      );
+      noBtn.addEventListener(`click`, () =>
+        deleteConfirmation.classList.remove(`active`)
+      );
+      yesBtn.addEventListener(`click`, () => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        deleteConfirmation.classList.remove(`active`);
+      });
+      eraser.addEventListener("click", () => {
+        canvas.classList.toggle(`active`);
+        eraser.classList.toggle(`active`);
+      });
+    </script>
+
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      * {
+        box-sizing: border-box;
+      }
+
+      canvas.active {
+        cursor: url("https://icons.iconarchive.com/icons/iconsmind/outline/24/Eraser-icon.png"),
+          auto;
+      }
+      .controls {
+        background-color: #ccc;
+        display: flex;
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 5px;
+        width: 100px;
+        justify-content: space-around;
+      }
+      button.controls {
+        background: transparent;
+        border: none;
+      }
+      #eraser.active {
+        background-color: red;
+      }
+
+      .container {
+        position: relative;
+      }
+      .delete-confirmation p {
+        display: block;
+      }
+      .delete-confirmation {
+        background-color: #ccc;
+        align-items: center;
+        justify-content: space-around;
+        display: none;
+        pointer-events: none;
+        flex-wrap: wrap;
+        width: 400px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        border: solid #ccc;
+        margin: -200px 0 0 -200px;
+      }
+      .delete-confirmation.active {
+        display: flex;
+        pointer-events: all;
+      }
+    </style>
+  </body>
 </html>
