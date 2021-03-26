@@ -1,46 +1,212 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Console Tricks!</title>
-</head>
-<body>
-
-  <p onClick="makeGreen()">×BREAK×DOWN×</p>
-
-  <script>
-    const dogs = [{ name: 'Snickers', age: 2 }, { name: 'hugo', age: 8 }];
-
-    function makeGreen() {
-      const p = document.querySelector('p');
-      p.style.color = '#BADA55';
-      p.style.fontSize = '50px';
+  <head>
+    <meta charset="UTF-8" />
+    <title>Console Tricks!</title>
+  </head>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
+    body {
+      background-color: #d0ebe8;
+    }
+    .table {
+      border-radius: 20px;
+      background: #d0ebe8;
+      box-shadow: 5px 5px 10px #bdd6d3, -5px -5px 10px #e3fffd;
+      display: grid;
+      grid-template-columns: 1fr 3fr 1fr;
+      grid-template-rows: repeat(13, auto);
+      margin: 20px;
+    }
+    .log-type,
+    .log-description,
+    .log-syntax,
+    .log-MDN {
+      justify-self: center;
+      padding: 5px 0 5px 0;
+      margin: 15px 0 15px 0;
+      text-decoration: none;
+    }
+    .info {
+      font-size: larger;
+      text-align: center;
+    }
+  </style>
+  <body>
+    <p onClick="makeGreen()" style="display: none">×BREAK×DOWN×</p>
 
-    // Regular
+    <div class="table">
+      <p class="log-type">Type</p>
+      <p class="log-description">Description</p>
+      <p class="log-syntax">Syntax</p>
 
-    // Interpolated
+      <p class="log-type">Regular</p>
+      <p class="log-description">Regular message on console</p>
+      <p class="log-syntax"><code>console.log(`Message`)</code></p>
 
-    // Styled
+      <p class="log-type">Interpolated</p>
+      <p class="log-description">
+        That is how you insert JS variables into some string for example
+      </p>
+      <p class="log-syntax">
+        <code>console.log(`Message ${here goes your JS stuff}`)</code>
+      </p>
 
-    // warning!
+      <p class="log-type">Styled</p>
+      <p class="log-description">You can add some style directly on console</p>
+      <p class="log-syntax">
+        <code
+          >console.log( "%c Message", "font-size:20px; background:red;
+          text-shadow: 10px 10px 0 pink" );</code
+        >
+      </p>
 
-    // Error :|
+      <p class="log-type">Warning</p>
+      <p class="log-description">Log's a message in a warning template</p>
+      <p class="log-syntax"><code>console.warn("Warning")</code></p>
 
-    // Info
+      <p class="log-type">Error</p>
+      <p class="log-description">Log's a message in a error template</p>
+      <p class="log-syntax"><code>console.error(`Error`)</code></p>
 
-    // Testing
+      <p class="log-type">Info</p>
+      <p class="log-description">Log's a message in a info template</p>
+      <p class="log-syntax"><code>console.info(`Info`)</code></p>
 
-    // clearing
+      <p class="log-type">Testing</p>
+      <p class="log-description">
+        Test the condition that you insert and logs a message in cases that the
+        condition in not true
+      </p>
+      <p class="log-syntax">
+        <code
+          >console.assert(condition, "Message in cases that the condition is
+          false");
+        </code>
+      </p>
 
-    // Viewing DOM Elements
+      <p class="log-type">clearing</p>
+      <p class="log-description">
+        Clear all previous console messages (please don't)
+      </p>
+      <p class="log-syntax"><code>console.clear()</code></p>
 
-    // Grouping together
+      <p class="log-type">Viewing DOM Elements</p>
+      <p class="log-description">Shows you a DOM element</p>
+      <p class="log-syntax"><code>console.log(p) or console.dir(p)</code></p>
 
-    // counting
+      <p class="log-type">Grouping</p>
+      <p class="log-description">Arrange a groups of logs into a dropdown</p>
+      <p class="log-syntax">
+        <code
+          >console.groupCollapsed(bart); console.log(`This is bart`);
+          console.log(`bart is 7 years old`); console.log(`bart is 49 dog years
+          old`); console.groupEnd(bart);</code
+        >
+      </p>
 
-    // timing
+      <p class="log-type">counting</p>
+      <p class="log-description">
+        Tracks and log how many times that message was logged
+      </p>
+      <p class="log-syntax"><code>console.count(`Message`)</code></p>
 
-  </script>
-</body>
+      <p class="log-type">timing</p>
+      <p class="log-description">
+        Tracks and log the time that any passed inserted action took
+      </p>
+      <p class="log-syntax">
+        <code
+          >console.time(`counting time`); Any function/fetch/whatever goes here
+          console.timeEnd(`counting time`);
+        </code>
+      </p>
+    </div>
+    <p class="info">
+      All this info are detailed at
+      <a href="https://developer.mozilla.org/en-US/docs/Web/API/console">MDN</a
+      >, please visit!
+    </p>
+
+    <script>
+      const dogs = [
+        {name: "Snickers", age: 2},
+        {name: "hugo", age: 8},
+      ];
+
+      const p = document.querySelector("p");
+      function makeGreen() {
+        p.style.color = "#BADA55";
+        p.style.fontSize = "50px";
+      }
+
+      // Regular
+      console.log(`🚀`);
+
+      // Interpolated
+      console.log("Hello I am a %s string!", "💩"); // easily replaced by ` ${}`
+
+      // Styled
+      console.log(
+        "%c I am some great text",
+        "font-size:20px; background:red; text-shadow: 10px 10px 0 pink"
+      );
+
+      // warning!
+      console.warn("Warning");
+
+      // Error :|
+      console.error(`Error`);
+
+      // Info
+      console.info(`info`);
+      // Testing
+      console.assert(p.classList.contains("ouch"), "That is wrong!");
+
+      // clearing
+      //console.clear(); //please don't
+
+      // Viewing DOM Elements
+      console.log(`🚀 ~ p`, p);
+      console.dir(p);
+
+      // Grouping together
+      dogs.forEach((dog) => {
+        console.groupCollapsed(`${dog.name}`);
+        console.log(`This is ${dog.name}`);
+        console.log(`${dog.name} is ${dog.age} years old`);
+        console.log(`${dog.name} is ${dog.age * 7} dog years old`);
+        console.groupEnd(`${dog.name}`);
+      });
+      // counting
+      console.groupCollapsed(`counter`);
+      console.count("Wes");
+      console.count("Wes");
+      console.count("Steve");
+      console.count("Steve");
+      console.count("Wes");
+      console.count("Steve");
+      console.count("Wes");
+      console.count("Steve");
+      console.count("Steve");
+      console.count("Steve");
+      console.count("Steve");
+      console.count("Steve");
+      console.groupEnd(`counter`);
+
+      // timing
+
+      console.time("fetching data");
+      fetch("https://api.github.com/users/wesbos")
+        .then((data) => data.json())
+        .then((data) => {
+          console.timeEnd("fetching data");
+          console.log(data);
+        });
+    </script>
+  </body>
 </html>
