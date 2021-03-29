@@ -1,12 +1,179 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Key Detection</title>
-  <script type="text/javascript" src="https://www.cornify.com/js/cornify.js"></script>
-</head>
-<body>
-<script>
-</script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Key Detection</title>
+    <script
+      type="text/javascript"
+      src="https://www.cornify.com/js/cornify.js"
+    ></script>
+  </head>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      background-color: #e0e0e0;
+    }
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: sans-serif;
+    }
+
+    .wrong-pass {
+      font-size: 24px;
+      padding: 0.25em;
+      border: 2px solid #999;
+
+      /* 2 animations: shake, and glow red */
+      animation-name: shake, glow-red;
+      animation-duration: 0.7s, 0.35s;
+      animation-iteration-count: 1, 2;
+    }
+
+    @keyframes shake {
+      0%,
+      20%,
+      40%,
+      60%,
+      80% {
+        transform: translateX(8px);
+      }
+      10%,
+      30%,
+      50%,
+      70%,
+      90% {
+        transform: translateX(-8px);
+      }
+    }
+
+    @keyframes glow-red {
+      0%,
+      100% {
+        border-color: indianred;
+      }
+    }
+
+    .hint {
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: 7px;
+      margin: 5px 5px 0 0;
+      border-radius: 10px;
+      border: 2px solid #1093df;
+      outline: none;
+    }
+    .hidden {
+      display: none;
+    }
+    a {
+      text-decoration: none;
+      color: #3f3f3f;
+    }
+    .wrapper {
+      border: 2px solid #1093df;
+      display: flex;
+      align-items: center;
+      border-radius: 10px;
+      box-shadow: 6px 6px 4px 1px rgba(28, 28, 28, 0.16);
+    }
+    .code-slot {
+      background-color: #fff;
+      box-shadow: 6px 6px 4px 1px rgba(28, 28, 28, 0.16);
+      border: none;
+      margin: 19px 13px 19px 13px;
+      height: 70px;
+      width: 70px;
+      font-size: 60px;
+      text-align: center;
+    }
+    .code {
+      color: #3f3f3f;
+      margin-top: 20px;
+      position: absolute;
+      top: 0;
+      font-size: large;
+    }
+  </style>
+  <body>
+    <button class="hint">
+      <a class="hidden hint-link" href="https://keycode.info/" target="_blank"
+        >Need a hint?</a
+      >
+      <span class="clown"> 🤡</span>
+    </button>
+    <p class="code">The code is 623</p>
+    <div class="wrapper">
+      <p class="code-slot"></p>
+      <p class="code-slot"></p>
+      <p class="code-slot"></p>
+      <p class="code-slot"></p>
+      <p class="code-slot"></p>
+      <p class="code-slot"></p>
+      <p class="code-slot"></p>
+    </div>
+    <script>
+      let keys = [];
+      const code = 623;
+
+      // window.addEventListener("keyup", (e) => {
+      //   keys.push(e.keyCode);
+      //   console.log(`🚀 ~ e.code`, e.code);
+      //   keys.splice(-code.length - 1, keys.length - code.length);
+      //   if (keys.join("").includes(code)) {
+      //     cornify_add();
+      //   }
+      //   console.log(keys);
+      // });
+
+      // TODO: extra mile: use a keycode code and sum the array entries to check if it is correct
+
+      const clown = document.querySelector(`.clown`);
+      const hint = document.querySelector(`.hint-link`);
+      const wrapper = document.querySelector(`.wrapper`);
+      const codeSlots = document.querySelectorAll(`.code-slot`);
+
+      const reg = /[a-z]\-/gi;
+
+      function verifyCode() {
+        const sum = keys.reduce((a, b) => a + b, 0);
+        console.log(`🚀 ~ sum`, sum);
+        if (sum === 623) {
+          console.log(`SUCCESS!!!`);
+          wrapper.style.border = `solid 2px #2BE06B`;
+          setTimeout(cleanKeys, 2000);
+        } else {
+          console.log(`Naaah`);
+          wrapper.classList.add(`wrong-pass`);
+          wrapper.addEventListener(`animationend`, () =>
+            wrapper.classList.remove(`wrong-pass`)
+          );
+          setTimeout(cleanKeys, 2000);
+        }
+      }
+      function cleanKeys() {
+        keys = [];
+        codeSlots.forEach((slot) => (slot.innerText = ``));
+        wrapper.style.border = `solid 2px #1093df`;
+      }
+      let validKey;
+      clown.addEventListener(`click`, () => hint.classList.toggle(`hidden`));
+      window.addEventListener("keyup", (e) => {
+        validKey = e.key.match(/[a-z-]/gi);
+        if (keys.length < 7 && validKey) {
+          keys.push(e.keyCode);
+          codeSlots[keys.length - 1].textContent = e.key.toLocaleUpperCase();
+        }
+        if (keys.length === 7) {
+          verifyCode();
+        }
+      });
+    </script>
+  </body>
 </html>
