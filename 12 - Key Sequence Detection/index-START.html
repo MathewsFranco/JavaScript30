@@ -139,17 +139,13 @@
       const wrapper = document.querySelector(`.wrapper`);
       const codeSlots = document.querySelectorAll(`.code-slot`);
 
-      const reg = /[a-z]\-/gi;
-
       function verifyCode() {
         const sum = keys.reduce((a, b) => a + b, 0);
-        console.log(`🚀 ~ sum`, sum);
+        //code = foda-se
         if (sum === 623) {
-          console.log(`SUCCESS!!!`);
           wrapper.style.border = `solid 2px #2BE06B`;
           setTimeout(cleanKeys, 2000);
         } else {
-          console.log(`Naaah`);
           wrapper.classList.add(`wrong-pass`);
           wrapper.addEventListener(`animationend`, () =>
             wrapper.classList.remove(`wrong-pass`)
