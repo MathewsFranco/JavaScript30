@@ -1,56 +1,216 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>JS Reference VS Copy</title>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>JS Reference VS Copy</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@200&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: "Roboto Slab", serif;
+    }
+    body {
+      background-image: linear-gradient(225deg, #ab2a5d 17%, #ca2e43 100%);
+      color: #eaf67e;
+    }
+    p {
+      font-size: 24px;
+    }
+    .title{
+      margin-top: 30px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .sub-title {
+      text-align: center;
+    }
+    .string,
+    .array {
+      margin: 50px 60px 40px 60px;
+      display: flex;
+    }
+    .string-explanation,
+    .array-explanation{
+      margin-right: 30px;
+      flex:1;
+      max-width: 60vw;
+    }
+    .examples h3{
+      margin-bottom: 10px;
+    }
+    .shallow-explanation{
+      margin: 50px 60px 40px 60px;
+      border: solid 1px #eaf67e;
+      border-radius: 20px;
+      padding: 15px;
+    }
+    .important{
+      text-decoration: underline;
+    }
+    .part1-wrapper,
+    .part2-wrapper{
+      margin: 50px 60px 40px 60px;
+      display: flex;
+      justify-content: space-around;
+    }
+    .deeper{
+      text-decoration: underline;
+      text-align: center;
+    }
+  </style>
+  <body>
+    <h1 class="title">Copy vs Reference</h1>
+    <h3 class="sub-title">
+      A quick explanation and examples of copy and reference elements
+    </h3>
+    <section class="string">
+      <div class="string-explanation">
+        <p>Strings, numbers and booleans:</p>
+        <p>
+          Every time you make a copy of a String, a number, or a Boolean, you
+          gonna get a whole new element that started as a copy of the reference
+          but from now on, he is on his own path.
+        </p>
+      </div>
+      <div class="examples">
+        <h3>EX:</h3>
+        <code
+          >let age = 100;</br> let age2 = age;</br> console.log(age, age2) // 100, 100</br>
+          age= 200;</br> console.log(age, age2) // 200, 100</code
+        >
+      </div>
+    </section>
+    <section class="array">
+      <div class="array-explanation">
+        <p>Arrays and Objects:</p>
+        <p>
+          When you copy an array or an object the same way you copy a string or
+          a number you gonna get just a reference to the same element, which
+          means that if you change any value, both gonna change, they are bound
+          🖤. To get a true copy of this type of element you have few
+          options:
+        </p>
+      </div>
+      <div class="examples">
+        <h3>EX:</h3>
+        <code
+          >newArray = Slice();</br>
+           newArray = [ ].concat(array)</br>
+           newArray = [...array] newArray = Array.from(array)</code
+        >
+      </div>
+    </section>
+    <p class="shallow-explanation">
+      <span class="important"> IMPORTANT:</span> Both array and object copies
+      are called shallow, meaning that they are only one level deep, if you need
+      a deeper copy, look for a clone function or use lodash :)
+    </p>
+    <div class="part1-wrapper">
+      <code
+        >const people = [ </br>{name: `Jorge`, age: 16},</br> {name: `Sara`, age: 90} ]</br>
+        </br>
+        const peopleCopy = people.slice(); </br>
+        peopleCopy[2] = {name: `Matt`, age:
+        44}</code
+      >
+      <code
+        >people = [ </br>{name: `Jorge`, age: 16}, </br>{name: `Sara`, age: 90} ]
+      </br>
+      </br>
+        peopleCopy = [</br> {name: `Jorge`, age: 16},</br> {name: `Sara`, age: 90},</br>
+        {name: `Matt`, age: 44} ]</code
+      >
+    </div>
+      <p class="deeper">Now if we change deeper:</p>
+      <div class="part2-wrapper">
+        <code>peopleCopy[0].name = `Pepa`</code>
+        <code
+          >people = [ </br>{name: `Pepa`, age: 16},</br> {name: `Sara`, age: 90} ]</br>
+          </br>
+          peopleCopy = [ </br>{name: `Pepa`, age: 16}, </br>{name: `Sara`, age: 90},</br>
+          {name: `Matt`, age: 44} ]</code
+        >
+      </div>
+    <script>
+      // start with strings, numbers and booleans
+      let age = 100;
+      let age2 = age;
+      // console.log(`🚀 ~ age's`, age, age2);
+      age = 200;
+      // console.log(`🚀 ~ age's`, age, age2);
 
-  <script>
-    // start with strings, numbers and booleans
+      let name = "Wes";
+      let name2 = name;
+      // console.log(name, name2);
+      name = "wesley";
+      // console.log(name, name2);
 
-    // Let's say we have an array
-    const players = ['Wes', 'Sarah', 'Ryan', 'Poppy'];
+      // Let's say we have an array
+      const players = ["Wes", "Sarah", "Ryan", "Poppy"];
 
-    // and we want to make a copy of it.
+      // and we want to make a copy of it.
+      const team = players;
+      // console.log(`🚀 ~ `, team, players);
 
-    // You might think we can just do something like this:
+      // You might think we can just do something like this:
+      team[3] = `lux`;
+      // however what happens when we update that array?
+      // console.log(`🚀 ~ `, team, players);
 
-    // however what happens when we update that array?
+      // now here is the problem!
 
-    // now here is the problem!
+      // oh no - we have edited the original array too!
 
-    // oh no - we have edited the original array too!
+      // Why? It's because that is an array reference, not an array copy. They both point to the same array!
 
-    // Why? It's because that is an array reference, not an array copy. They both point to the same array!
+      // So, how do we fix this? We take a copy instead!
 
-    // So, how do we fix this? We take a copy instead!
+      // one way
+      const team2 = players.slice();
+      team2[3] = `ralph`;
+      // or create a new array and concat the old one in
+      const team3 = [].concat(players);
+      team3[3] = `Tommy`;
+      // or use the new ES6 Spread
+      const team4 = [...players];
+      // now when we update it, the original one isn't changed
+      team4[3] = `nachos`;
+      const team5 = Array.from(players);
+      team5[3] = `Ruby;`;
+      console.log(`🚀 ~ players`, players);
+      console.log(`🚀 ~ team`, team);
+      console.log(`🚀 ~ team2`, team2);
+      console.log(`🚀 ~ team3`, team3);
+      console.log(`🚀 ~ team4`, team4);
+      console.log(`🚀 ~ team5`, team5);
 
-    // one way
+      // The same thing goes for objects, let's say we have a person object
 
-    // or create a new array and concat the old one in
+      // with Objects
+      const person = {
+        name: "Wes Bos",
+        age: 80,
+      };
 
-    // or use the new ES6 Spread
+      // and think we make a copy:
+      const captain = person;
+      captain.number = 99;
 
-    // now when we update it, the original one isn't changed
+      // how do we take a copy instead?
+      const cap2 = Object.assign({}, person, {number: 99, age: 12});
+      console.log(`🚀 ~ cap2`, cap2);
+      // We will hopefully soon see the object ...spread  DONE!!!
+      const cap3 = {...person};
+      console.log(`🚀 ~ cap3`, cap3);
 
-    // The same thing goes for objects, let's say we have a person object
-
-    // with Objects
-    const person = {
-      name: 'Wes Bos',
-      age: 80
-    };
-
-    // and think we make a copy:
-
-    // how do we take a copy instead?
-
-    // We will hopefully soon see the object ...spread
-
-    // Things to note - this is only 1 level deep - both for Arrays and Objects. lodash has a cloneDeep method, but you should think twice before using it.
-
-  </script>
-
-</body>
+      // NOTE: this is only 1 level deep - both for Arrays and Objects. lodash has a cloneDeep method, but you should think twice before using it.
+    </script>
+  </body>
 </html>
