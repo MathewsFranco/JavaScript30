@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>JS Drum Kit</title>
+    <link rel="stylesheet" href="/style.5cfb8ce9.css">
+  <script src="/style.5cfb8ce9.js"></script></head>
+  <body>
+    <div class="keys">
+      <div data-key="65" class="key">
+        <kbd>A</kbd>
+        <span class="sound">clap</span>
+      </div>
+      <div data-key="83" class="key">
+        <kbd>S</kbd>
+        <span class="sound">hihat</span>
+      </div>
+      <div data-key="68" class="key">
+        <kbd>D</kbd>
+        <span class="sound">kick</span>
+      </div>
+      <div data-key="70" class="key">
+        <kbd>F</kbd>
+        <span class="sound">openhat</span>
+      </div>
+      <div data-key="71" class="key">
+        <kbd>G</kbd>
+        <span class="sound">boom</span>
+      </div>
+      <div data-key="72" class="key">
+        <kbd>H</kbd>
+        <span class="sound">ride</span>
+      </div>
+      <div data-key="74" class="key">
+        <kbd>J</kbd>
+        <span class="sound">snare</span>
+      </div>
+      <div data-key="75" class="key">
+        <kbd>K</kbd>
+        <span class="sound">tom</span>
+      </div>
+      <div data-key="76" class="key">
+        <kbd>L</kbd>
+        <span class="sound">tink</span>
+      </div>
+    </div>
+
+    <audio data-key="65" src="/clap.6e6fca4d.wav"></audio>
+    <audio data-key="83" src="/hihat.e061665d.wav"></audio>
+    <audio data-key="68" src="/kick.1e4352c6.wav"></audio>
+    <audio data-key="70" src="/openhat.6cbafde9.wav"></audio>
+    <audio data-key="71" src="/boom.13d2795f.wav"></audio>
+    <audio data-key="72" src="/ride.ca2445b5.wav"></audio>
+    <audio data-key="74" src="/snare.e8f776c9.wav"></audio>
+    <audio data-key="75" src="/tom.19d9d5ac.wav"></audio>
+    <audio data-key="76" src="/tink.a52d4ac7.wav"></audio>
+
+    <script>// extra mile: works on click!
+function playSound(e) {
+  var soundOnClick = document.querySelector("audio[data-key=\"".concat(e.target.dataset.key || e.target.parentNode.dataset.key, "\"]"));
+  var soundOnKey = document.querySelector("audio[data-key=\"".concat(e.keyCode, "\"]"));
+  var sound = soundOnClick || soundOnKey;
+  if (!sound) return;
+  var divOnClick = document.querySelector("div[data-key=\"".concat(e.target.dataset.key || e.target.parentNode.dataset.key, "\"]"));
+  var divOnKey = document.querySelector("div[data-key=\"".concat(e.keyCode, "\"]"));
+  var div = divOnKey || divOnClick;
+  sound.currentTime = 0;
+  sound.play();
+  div.classList.add("playing"); // wait the animation then remove the class
+}
+
+function removeClass(e) {
+  if (e.propertyName !== "transform") return;
+  this.classList.remove("playing");
+}
+
+var keys = document.querySelectorAll(".key");
+keys.forEach(function (key) {
+  return key.addEventListener("transitionend", removeClass);
+});
+window.addEventListener("keydown", playSound);
+window.addEventListener("click", playSound);</script>
+  </body>
+</html>
