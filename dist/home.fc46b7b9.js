@@ -119,10 +119,15 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   return newRequire;
 })({"home.js":[function(require,module,exports) {
 var fileNames = ['01 - JavaScript Drum Kit', '02 - JS and CSS Clock', '03 - CSS Variables', '04 - Array Cardio Day 1', '05 - Flex Panel Gallery', '06 - Type Ahead', '07 - Array Cardio Day 2', '08 - Fun with HTML5 Canvas', '09 - Dev Tools Domination', '10 - Hold Shift and Check Checkboxes', '11 - Custom Video Player', '12 - Key Sequence Detection', '13 - Slide in on Scroll', '14 - JavaScript References VS Copying', '15 - LocalStorage', '16 - Mouse Move Shadow', '17 - Sort Without Articles', '18 - Adding Up Times with Reduce', '19 - Webcam Fun', '20 - Speech Detection', '21 - Geolocation', '22 - Follow Along Link Highlighter', '23 - Speech Synthesis', '24 - Sticky Nav', '25 - Event Capture, Propagation, Bubbling and Once', '26 - Stripe Follow Along Nav', '27 - Click and Drag', '28 - Video Speed Controller', '29 - Countdown Timer', '30 - Whack A Mole'];
-var days = document.querySelectorAll('.day-card');
+var days = document.querySelectorAll(".day-card");
+var modalTittle = document.querySelector(".modal-title");
+var projectFrame = document.querySelector(".project-frame");
 days.forEach(function (day) {
   day.addEventListener('click', function () {
-    console.log(day);
+    var dayNumber = day.querySelector("span").innerText;
+    modalTittle.textContent = fileNames[dayNumber - 1];
+    projectFrame.src = "./".concat(fileNames[dayNumber - 1], "/index-START.html");
+    console.log("\uD83D\uDE80 ~ projectFrame", projectFrame);
   });
 });
 },{}],"../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
@@ -153,7 +158,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50144" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52391" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

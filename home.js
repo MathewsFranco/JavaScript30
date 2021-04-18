@@ -32,10 +32,16 @@ const fileNames = [
 ]
 
 
-const days = document.querySelectorAll('.day-card')
+const days = document.querySelectorAll(`.day-card`);
+const modalTittle = document.querySelector(`.modal-title`);
+const projectFrame = document.querySelector(`.project-frame`);
+
 
 days.forEach(day => {
   day.addEventListener('click', () => {
-    console.log(day);
+    const dayNumber = day.querySelector("span").innerText;
+    modalTittle.textContent = fileNames[dayNumber -1];
+    projectFrame.src = `./${fileNames[dayNumber -1]}/index-START.html`;
+    console.log(`🚀 ~ projectFrame`, projectFrame)
   })
 });

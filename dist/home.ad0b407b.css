@@ -22,7 +22,6 @@ a {
   grid-template-columns: repeat(10, 1fr);
   grid-template-rows: repeat(3, 1fr);
   gap: 15px 15px;
-  justify-content: space-evenly;
 }
 .day-card {
   border: solid 2px #000;
