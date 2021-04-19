@@ -42,6 +42,5 @@ days.forEach(day => {
     const dayNumber = day.querySelector("span").innerText;
     modalTittle.textContent = fileNames[dayNumber -1];
     projectFrame.src = `./${fileNames[dayNumber -1]}/index-START.html`;
-    console.log(`🚀 ~ projectFrame`, projectFrame)
   })
 });
