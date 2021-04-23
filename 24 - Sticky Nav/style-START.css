@@ -57,7 +57,7 @@ nav {
   z-index: 1;
 }
 
-body.fixed-nav nav {
+.fixed-nav nav {
   position: fixed;
   box-shadow: rgba(0, 0, 0, 0.2);
 }

@@ -274,17 +274,17 @@
       const nav = document.querySelector(`#main`);
       let topOfNav = nav.offsetTop;
 
-      function ficaNav() {
-        if (window.screenY >= topOfNav) {
-          document.body.style.paddingTop = nav.offsetTop + `px`;
-          document.body.classList.add(`fixed-nav`);
+      function fixNav() {
+        if (window.scrollY >= topOfNav) {
+          document.body.style.paddingTop = nav.offsetTop + "px";
+          document.body.classList.add("fixed-nav");
         } else {
-          document.body.classList.remove(`fixed-nav`);
+          document.body.classList.remove("fixed-nav");
           document.body.style.paddingTop = 0;
         }
       }
 
-      window.addEventListener(`scroll`, fixNav);
+      window.addEventListener("scroll", fixNav);
     </script>
   </body>
 </html>
