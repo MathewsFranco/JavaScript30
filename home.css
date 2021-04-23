@@ -1,12 +1,11 @@
-* {
+body,
+html {
+  height: 100%;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
-body,
-html {
-  height: 100%;
-}
+
 a {
   text-decoration: none;
 }
@@ -28,4 +27,22 @@ a {
   .wrapper {
     height: 100vh;
   }
+}
+.wrapper {
+  background-color: #f8f9fa;
+  opacity: 1;
+  background-image: radial-gradient(#0d6efd 0.75px, #f8f9fa 0.75px);
+  background-size: 15px 15px;
+}
+.day-card {
+  background: rgba(248, 249, 250, 0.77);
+  border-radius: 4px;
+  transition: transform 200ms;
+}
+.day-card:hover {
+  transform: translate(-3px, -3px);
+}
+.navbar,
+a {
+  background: rgba(248, 249, 250, 0.77);
 }

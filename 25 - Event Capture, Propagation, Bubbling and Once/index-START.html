@@ -1,71 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Understanding JavaScript's Capture</title>
-  </head>
-  <body class="bod">
-    <div class="one">
-      <div class="two">
-        <div class="three"></div>
-      </div>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Understanding JavaScript's Capture</title>
+</head>
+
+<body class="bod">
+  <div class="one">
+    <div class="two">
+      <div class="three"></div>
     </div>
-    <button></button>
+  </div>
+  <button>Click me please</button>
 
-    <style>
-      html {
-        box-sizing: border-box;
+  <style>
+    html {
+      box-sizing: border-box;
+    }
+
+    *,
+    *:before,
+    *:after {
+      box-sizing: inherit;
+    }
+
+    div {
+      width: 100%;
+      padding: 100px;
+    }
+
+    .one {
+      background: thistle;
+    }
+
+    .two {
+      background: mistyrose;
+    }
+
+    .three {
+      background: coral;
+    }
+  </style>
+
+  <script>
+    const divs = document.querySelectorAll("div");
+    const btn = document.querySelector("button");
+
+    function logText(e) {
+      console.log(this.classList.value);
+      // e.stopPropagation(); //stop Bubble
+    }
+
+    divs.forEach((div) =>
+      div.addEventListener("click", logText, {
+        capture: false,
+        once: true,
+      })
+    );
+
+    btn.addEventListener(
+      `click`,
+      () => {
+        console.log(`cliiiick!!`);
+      },
+      {
+        once: true,
       }
+    );
+  </script>
+</body>
 
-      *,
-      *:before,
-      *:after {
-        box-sizing: inherit;
-      }
-
-      div {
-        width: 100%;
-        padding: 100px;
-      }
-
-      .one {
-        background: thistle;
-      }
-
-      .two {
-        background: mistyrose;
-      }
-
-      .three {
-        background: coral;
-      }
-    </style>
-
-    <script>
-      const divs = document.querySelectorAll("div");
-      const btn = document.querySelector("button");
-
-      function logText(e) {
-        console.log(this.classList.value);
-        // e.stopPropagation(); //stop Bubble
-      }
-
-      divs.forEach((div) =>
-        div.addEventListener("click", logText, {
-          capture: false,
-          once: true,
-        })
-      );
-
-      btn.addEventListener(
-        `click`,
-        () => {
-          console.log(`cliiiick!!`);
-        },
-        {
-          once: true,
-        }
-      );
-    </script>
-  </body>
 </html>
